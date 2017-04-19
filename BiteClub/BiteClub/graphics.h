@@ -6,34 +6,30 @@
 *
 * Contains all of the functionality required to render objects. For now, just the GraphicsEngine class,
 * which currently only has empty functions. This class will have to be made a singleton.
+*
+* We're allowed to use SDL for this assignment. Should I go ahead with this? DEFINITELY.
 */
 
+#include <SDL/SDL.h>
 #include <GL/freeglut.h>
+#include <vector>
 
-class GraphicsEngine{
-public:
-	GraphicsEngine(){};
-	~GraphicsEngine(){};
+namespace graphics{
 
-	/**
-	* init initialises the graphics to be ready for rendering. Unfortunately, it must take the
-	* arguments from the main method to initialise OpenGL.
-	*/
-	static void init(int numArgs, char ** args){
-		// Don't hard-code this garbage. Files are the way to go.
-		glutInit(&numArgs, args);
-		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-		glutInitWindowPosition(100, 100);
-		glutInitWindowSize(320, 320);
-		glutCreateWindow("Test");
-		glutDisplayFunc(render);
+	class GraphicsEngine{
+	public:
+		GraphicsEngine();
+		~GraphicsEngine(){};
+		
+		void init();
+		void display();
+		int readInput();
+
+	private:
+		SDL_Window* window;
+		int screenWidth;
+		int screenHeight;
+		std::vector<unsigned char> heightfieldData;
+		//static std::vector<Model> models;  //To store model data. Models are going to have a position and array (or whatever) of points to draw. Don't uncomment this yet.
 	};
-
-	static void renderStart(){
-		glutMainLoop();
-	};
-
-private:
-	static void render(){};
-	static void update(){};
-};
+}
