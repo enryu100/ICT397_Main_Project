@@ -2,6 +2,7 @@
 
 #include "graphics.h"
 #include "Terrain.h"
+#include <iostream>
 
 /**
 * MainGame.h
@@ -19,9 +20,6 @@
 
 enum class GameState {PLAY, EXIT};
 
-using namespace graphics;
-using namespace terrain;
-
 class MainGame
 {
 public:
@@ -31,8 +29,9 @@ public:
 	void run(char* terrainFile /*Temporary - will be init file name*/);
 
 private:
-	GraphicsEngine graphicsEng;
-	Terrain gameTerrain;
+	graphics::GraphicsEngine graphicsEng;
+	terrain::Terrain gameTerrain;
+	events::gameEvent gameEvnt;
 	GameState currentState;
 
 	void initSystems(char* terrainFile);

@@ -1,5 +1,8 @@
 #include "MainGame.h"
 
+using namespace graphics;
+using namespace terrain;
+
 MainGame::MainGame(void){
 	currentState = GameState::PLAY;
 }
@@ -14,13 +17,23 @@ void MainGame::run(char* terrainFile){
 }
 
 void MainGame::initSystems(char* terrainFile){
-	graphicsEng.init();
 	gameTerrain.loadHeightfield(terrainFile);
+	graphicsEng.init();
+	graphicsEng.getHeightfieldData(gameTerrain.getTerrainData());
 }
 
 void MainGame::processInput(){
-	if(graphicsEng.readInput() < 0)
-		currentState = GameState::EXIT;
+	events::gameEvent newEvent = graphicsEng.pollEvents();
+
+	if(newEvent.hasEvents){
+		// Change camera view (mouse move)
+		// Perform action (button/key press)
+
+		if(newEvent.hasQuit)
+			currentState = GameState::EXIT;
+
+		gameEvnt = newEvent;
+	}
 }
 
 void MainGame::gameLoop(){

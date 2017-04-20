@@ -87,6 +87,7 @@
     <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="events.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Terrain.h" />
