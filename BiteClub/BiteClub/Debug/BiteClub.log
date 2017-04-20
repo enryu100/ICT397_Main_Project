@@ -1,18 +1,16 @@
-﻿Build started 17/04/2017 11:02:03 PM.
+﻿Build started 19/04/2017 3:35:56 PM.
      1>Project "C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\BiteClub\BiteClub.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I../dependencies/include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MainGame.cpp main.cpp
-         MainGame.cpp
-         Generating Code...
-         Compiling...
-         main.cpp
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I../dependencies/include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt graphics.cpp
+         graphics.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.exe" /INCREMENTAL /NOLOGO /LIBPATH:../dependencies/lib gl/opengl32.lib gl/freeglut.lib lua/lua5.3.lib SDL/SDL2.lib SDL/SDL2main.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.exe" /INCREMENTAL /NOLOGO /LIBPATH:../dependencies/lib gl/opengl32.lib gl/freeglut.lib lua/lua5.3.lib SDL/SDL2.lib SDL/SDL2main.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.lib" /MACHINE:X86 Debug\graphics.obj
+         Debug\main.obj
          Debug\MainGame.obj
+         Debug\Terrain.obj
          BiteClub.vcxproj -> C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.exe
      1>Done Building Project "C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\BiteClub\BiteClub.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.57
+Time Elapsed 00:00:01.18

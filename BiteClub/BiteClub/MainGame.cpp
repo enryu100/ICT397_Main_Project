@@ -1,6 +1,5 @@
 #include "MainGame.h"
 
-
 MainGame::MainGame(void){
 	currentState = GameState::PLAY;
 }
@@ -9,22 +8,24 @@ MainGame::~MainGame(void){
 
 }
 
-void MainGame::run(int numArgs, char** args){
-	initSystems(numArgs, args);
+void MainGame::run(char* terrainFile){
+	initSystems(terrainFile);
 	gameLoop();
 }
 
-void MainGame::initSystems(int numArgs, char** args){
-	graphics.init(numArgs, args);
+void MainGame::initSystems(char* terrainFile){
+	graphicsEng.init();
+	gameTerrain.loadHeightfield(terrainFile);
 }
 
 void MainGame::processInput(){
-	
+	if(graphicsEng.readInput() < 0)
+		currentState = GameState::EXIT;
 }
 
 void MainGame::gameLoop(){
-	graphics.renderStart();
 	while(currentState != GameState::EXIT){
 		processInput();
+		graphicsEng.display();
 	}
 }
