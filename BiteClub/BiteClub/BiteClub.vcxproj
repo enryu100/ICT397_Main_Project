@@ -81,13 +81,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="lua_Script.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="lua_Script.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Terrain.h" />
   </ItemGroup>
