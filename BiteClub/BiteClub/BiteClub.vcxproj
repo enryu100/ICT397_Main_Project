@@ -83,18 +83,17 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="lua_Script.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Terrain.cpp" />
-    <ClCompile Include="Types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="events.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="lua_Script.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Terrain.h" />
-    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
