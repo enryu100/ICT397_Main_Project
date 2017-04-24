@@ -1,11 +1,16 @@
 #include "graphics.h"
 
+using namespace std;
 using namespace graphics;
+using namespace events;
 
 GraphicsEngine::GraphicsEngine(){
 	window = nullptr;
 	screenWidth = 1024;
 	screenHeight = 720;
+}
+
+GraphicsEngine::~GraphicsEngine(){
 }
 
 void GraphicsEngine::init(){
@@ -35,12 +40,12 @@ void GraphicsEngine::init(){
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void GraphicsEngine::display(){
+void GraphicsEngine::display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
 
-	gluLookAt(0.0, 0.0, -10.0, 2.0, 2.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(camX, camY, camZ, lookX, lookY, lookZ, 0.0f, 1.0f, 0.0f);
 
 	glBegin(GL_TRIANGLE_STRIP);
 		glColor3ub(254, 0, 0);
@@ -51,26 +56,63 @@ void GraphicsEngine::display(){
 		glVertex3f(2.0f, 3.0f, 2.0f);
 	glEnd();
 
+	drawTerrain();
+
 	SDL_GL_SwapWindow(window);
 }
 
-int GraphicsEngine::readInput(){
-	SDL_Event gameEvent;
-	int eventType = 0;
+gameEvent GraphicsEngine::pollEvents(){
+	SDL_Event eventSDL;
+	gameEvent eventGame;
 
-	while(SDL_PollEvent(&gameEvent)){
-		switch(gameEvent.type){
+	while(SDL_PollEvent(&eventSDL)){
+		eventGame.hasEvents = true;
+
+		switch(eventSDL.type){
 		case SDL_QUIT:
-			eventType = -1;
+			eventGame.hasQuit = true;
 			break;
 		case SDL_MOUSEMOTION:
-			eventType = 1;
+			eventGame.mouseX = eventSDL.motion.x;
+			eventGame.mouseY = eventSDL.motion.y;
+			break;
+		case SDL_KEYDOWN:
+			eventGame.keysPressed.push_back((char)eventSDL.key.keysym.sym);
+			eventGame.keyDown = true;
 			break;
 		default:
-			eventType = 0;
 			break;
 		}
 	}
 
-	return eventType;
+	return eventGame;
+}
+
+void GraphicsEngine::getHeightfieldData(const vector<unsigned char> data){
+	heightfieldData = data;
+}
+
+void GraphicsEngine::drawTerrain(){
+	// Square root because the actual size is all of the elements. This is, of course, assuming that the heightfield has the same dimensions for width and height.
+	int terrainSize = (int)sqrt((double)heightfieldData.size());
+	unsigned char heightColour;
+	float height, scale = 0.5f;
+
+	for(int zVal = 0; zVal < terrainSize; zVal++){
+		glBegin(GL_TRIANGLE_STRIP);
+		for(int xVal = 0; xVal < terrainSize; xVal++){
+			heightColour = heightfieldData.at((zVal * terrainSize) + xVal);
+			glColor3ub(heightColour, heightColour, heightColour);
+			height = (float)(heightColour * scale);
+			glVertex3f((float)xVal * scale, height, (float)zVal * scale);
+
+			if((zVal + 1) < terrainSize){
+				heightColour = heightfieldData.at(((zVal + 1) * terrainSize) + xVal);
+				glColor3ub(heightColour, heightColour, heightColour);
+				height = (float)(heightColour * scale);
+				glVertex3f((float)xVal * scale, height, (float)(zVal + 1) * scale);
+			}
+		}
+		glEnd();
+	}
 }
