@@ -1,145 +1,79 @@
 #include "Camera.h"
 #include <math.h>
 
+using namespace types;
+
 Camera::Camera(){
 	m_rotateSpeed = 0.0f;
 	m_moveSpeed = 0.0f;
-
-	ResetXYZ();
-
-	m_deltaMoveFB = 0;
-	m_deltaMoveLR = 0;
-	m_deltaMoveUD = 0;
-
-	m_rotateAngleLR = 0.0;
-	m_rotateAngleUD = 0.0;
-	m_deltaAngleLR = 0.0;
-	m_deltaAngleUD = 0.0;
+	pitch = 0.0f;
+	yaw = 0.0f;
 }
 
-void Camera::ResetXYZ()
-{
-	m_x = 0.0f;
-	m_y = 1.75f;
-	m_z = 0.0f;
-	
-	m_lookX = 0.0f;
-	m_lookY = 0.0f;
-	m_lookZ = -1.0f;
-	
-	m_lookXX = 1.0f;
-	m_lookYY = 1.0f;
-	m_lookZZ = 0.0f;
+void Camera::transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle){
+	Matrix4x4 rotMatrix, transMatrix, transform;
+
+	viewMatrix = Matrix4x4(Vector4D(1.0f, 0.0f, 0.0f, 0.0f),
+						   Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
+						   Vector4D(0.0f, 0.0f, 1.0f, 0.0f),
+						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+
+	rotMatrix = getRotMatrix(deltaXAngle, deltaYAngle, deltaZAngle);
+	transMatrix = getTransMatrix(deltaX, deltaY, deltaZ);
+
+	transform = transMatrix * rotMatrix;
+
+	viewMatrix = transform * viewMatrix;
 }
 
-void Camera::DirectionFB(int const & tempMove){
-	m_deltaMoveFB = tempMove;
-	if(m_deltaMoveFB < 0 || m_deltaMoveFB > 0){
-		MoveFB();
-	}
+Matrix4x4 Camera::getRotMatrix(float xRot, float yRot, float zRot){
+	Matrix4x4 xRotMatrix, yRotMatrix, zRotMatrix;
+	Vector4D xAxis, yAxis, zAxis;
+	float xCos, xSin, yCos, ySin, zCos, zSin;
+
+	pitch += xRot;
+	yaw += yRot;
+
+	xAxis = viewMatrix.columns[0];
+	yAxis = viewMatrix.columns[1];
+	zAxis = viewMatrix.columns[2];
+
+	xCos = cos(pitch);
+	xSin = sin(pitch);
+	yCos = cos(yaw);
+	ySin = sin(yaw);
+	zCos = cos(zRot);
+	zSin = sin(zRot);
+
+	xRotMatrix = Matrix4x4(Vector4D(m_rotateSpeed * (xCos + xAxis.x * xAxis.x * (1 - xCos)), m_rotateSpeed * (xAxis.z * xSin + xAxis.y * xAxis.x * (1 - xCos)), m_rotateSpeed * (-xAxis.y * xSin + xAxis.z * xAxis.x * (1 - xCos)), 0.0f).normalise(),
+						   Vector4D(m_rotateSpeed * (-xAxis.z * xSin + xAxis.x * xAxis.y * (1 - xCos)), m_rotateSpeed * (xCos + xAxis.y * xAxis.y * (1 - xCos)), m_rotateSpeed * (xAxis.x * xSin + xAxis.z * xAxis.y * (1 - xCos)), 0.0f).normalise(),
+						   Vector4D(m_rotateSpeed * (xAxis.y * xSin + xAxis.x * xAxis.z * (1 - xCos)), m_rotateSpeed * (-xAxis.x * xSin + xAxis.y * xAxis.z * (1 - xCos)), m_rotateSpeed * (xCos + xAxis.z * xAxis.z * (1 - xCos)), 0.0f).normalise(),
+						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+
+	// This is a transform on the global y-axis rather than a relative one. This means the camera will not rotate around its local y-axis.
+	yRotMatrix = Matrix4x4(Vector4D(m_rotateSpeed * yCos, 0.0f, m_rotateSpeed * -ySin, 0.0f).normalise(),
+						   Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
+						   Vector4D(m_rotateSpeed * ySin, 0.0f, m_rotateSpeed * yCos, 0.0f).normalise(),
+						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+
+	zRotMatrix = Matrix4x4(Vector4D(m_rotateSpeed * (zCos + zAxis.x * zAxis.x * (1 - zCos)), m_rotateSpeed * (zAxis.z * zSin + zAxis.y * zAxis.x * (1 - zCos)), m_rotateSpeed * (-zAxis.y * zSin + zAxis.z * zAxis.x * (1 - zCos)), 0.0f).normalise(),
+						   Vector4D(m_rotateSpeed * (-zAxis.z * zSin + zAxis.x * zAxis.y * (1 - zCos)), m_rotateSpeed * (zCos + zAxis.y * zAxis.y * (1 - zCos)), m_rotateSpeed * (zAxis.x * zSin + zAxis.z * zAxis.y * (1 - zCos)), 0.0f).normalise(),
+						   Vector4D(m_rotateSpeed * (zAxis.y * zSin + zAxis.x * zAxis.z * (1 - zCos)), m_rotateSpeed * (-zAxis.x * zSin + zAxis.y * zAxis.z * (1 - zCos)), m_rotateSpeed * (zCos + zAxis.z * zAxis.z * (1 - zCos)), 0.0f).normalise(),
+						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+
+	return(xRotMatrix * yRotMatrix * zRotMatrix);
 }
 
-void Camera::DirectionLR(int const & tempMove){
-	m_deltaMoveLR = tempMove;
-	if(m_deltaMoveLR < 0 || m_deltaMoveLR > 0){
-		MoveLR();
-	}
-}
+Matrix4x4 Camera::getTransMatrix(float x, float y, float z){
+	Matrix4x4 translate;
 
-void Camera::DirectionUD(int const & tempMove){
-	m_deltaMoveUD = tempMove;
-	if(m_deltaMoveUD < 0 || m_deltaMoveUD > 0){
-		MoveUD();
-	}
-}
+	position.x += x;
+	position.y += y;
+	position.z += z;
 
-void Camera::MoveFB(){
-	// record previous co-ordinates
-	m_xLast = m_x;
-	m_zLast = m_z;
+	translate.columns[3].x = position.x;
+	translate.columns[3].y = position.y;
+	translate.columns[3].z = position.z;
 
-	// set displacement x/z
-	GLdouble moveZ = (m_deltaMoveFB * (m_lookZ) * m_moveSpeed);
-	GLdouble moveX = (m_deltaMoveFB * (m_lookX) * m_moveSpeed);
-
-	//check collisions here
-	//if(!collision){
-		m_x += moveX;
-		m_z += moveZ;
-		callGLLookAt();
-	//}
-}
-
-void Camera::MoveLR(){
-	// record previous co-ordinates
-	m_zLast = m_z;
-	m_xLast = m_x;
-
-	// set movement step
-	GLdouble moveZ = (m_deltaMoveLR * (m_lookZZ) * m_moveSpeed);
-	GLdouble moveX = (m_deltaMoveLR * (m_lookXX) * m_moveSpeed);
-
-	//check collisions here?
-	//if(!collision){
-		m_x += moveX;
-		m_z += moveZ;
-		callGLLookAt();
-	//}
-}
-
-void Camera::MoveUD(){
-	GLdouble startY = m_y + m_deltaMoveUD * (m_lookYY) * m_moveSpeed * 5.0;
-
-	//check collisions here
-	//if (!collision){
-		m_y += m_deltaMoveUD * (m_lookYY) * m_moveSpeed;
-		callGLLookAt();
-	//}
-}
-
-void Camera::RotateLR()
-{
-	m_rotateAngleLR += m_deltaAngleLR;
-	m_lookX = sin(m_rotateAngleLR);
-	m_lookZ = -cos(m_rotateAngleLR);
-	m_lookXX = sin(m_rotateAngleLR + (float) PI/2.0);
-	m_lookZZ = -cos(m_rotateAngleLR + (float) PI/2.0);
-	callGLLookAt();
-}
-
-void Camera::LookUD()
-{
-	m_rotateAngleUD += m_deltaAngleUD;
-	m_lookY = sin(m_rotateAngleUD);
-	callGLLookAt();
-}
-
-void Camera::Position (GLdouble const & tempX, GLdouble const & tempY,
-			           GLdouble const & tempZ, GLdouble const & tempAngle)
-{
-	ResetXYZ();
-	
-	m_x = tempX;
-	m_y = tempY;
-	m_z = tempZ;
-
-	// rotate to correct angle
-	m_rotateAngleLR = tempAngle * (PI / 180);
-	m_lookX = sin(m_rotateAngleLR);
-	m_lookZ = -cos(m_rotateAngleLR);
-	m_lookXX = sin(m_rotateAngleLR + (float) PI/2.0);
-	m_lookZZ = -cos(m_rotateAngleLR + (float) PI/2.0);
-	m_rotateAngleUD = 0.0;
-	m_deltaAngleUD = 0.0;
-
-	// redislay
-	callGLLookAt();
-}
-
-void Camera::callGLLookAt()
-{
-	glLoadIdentity();
-	gluLookAt(m_x, m_y, m_z, 
-		      m_x + m_lookX, m_y + m_lookY, m_z + m_lookZ,
-			  0.0f, 1.0f, 0.0f);
+	return translate;
 }

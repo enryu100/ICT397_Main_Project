@@ -12,36 +12,18 @@
 * Model loaders! Probably an OBJECT loader, to be precise.
 */
 
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
 #pragma once
 
 #include <SDL/SDL.h>
 #include <GL/freeglut.h>
 #include <vector>
-#include "events.h"
+#include "Events.h"
+#include "Types.h"
 
 namespace graphics{
-
-	struct Vector2D{
-		float x;
-		float y;
-
-		Vector2D(){
-			x = 0.0f;
-			y = 0.0f;
-		}
-	};
-
-	struct Vector3D{
-		float x;
-		float y;
-		float z;
-
-		Vector3D(){
-			x = 0.0f;
-			y = 0.0f;
-			z = 0.0f;
-		}
-	};
 
 	class Model;
 
@@ -51,7 +33,7 @@ namespace graphics{
 		~GraphicsEngine();
 		
 		void init();
-		void display();
+		void display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ);
 		events::gameEvent pollEvents();
 		void getHeightfieldData(const std::vector<unsigned char> data);
 
@@ -73,12 +55,14 @@ namespace graphics{
 
 		void loadData(){};
 		// const [structure] getData();
-		Vector3D getModelPos(){};
-		void setModelPos(Vector3D newPos);
+		types::Vector3D getModelPos(){};
+		void setModelPos(types::Vector3D newPos);
 
 	private:
 		int modelID;
-		Vector3D modelPos;
+		types::Vector3D modelPos;
 		// [structure] modelData; // Some sort of structure to store model data. Array? Pointer? Have to look this up. Probably use pointers here too.
 	};
 }
+
+#endif

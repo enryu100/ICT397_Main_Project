@@ -1,3 +1,10 @@
+#ifndef EVENTS_H
+#define EVENTS_H
+
+#pragma once
+
+#include <vector>
+
 namespace events{
 	/**
 	* A generic structure to encapsulate SDL events. This will be used to pass information to
@@ -9,11 +16,11 @@ namespace events{
 		bool hasEvents;
 		// Determines if the game has been quit.
 		bool hasQuit;
-		// Which key on the keyboard was pressed, if any.
-		char keyPressed;
-		// Determines if the key is down.
+		// Which keys on the keyboard were pressed, if any.
+		std::vector<char> keysPressed;
+		// Determines if any key is down. May not be needed presently.
 		bool keyDown;
-		// Determines if the pressed key has been released. May not be needed presently.
+		// Determines if any key has been released. May not be needed presently.
 		bool keyReleased;
 		// The x position of the cursor on the screen.
 		int mouseX;
@@ -21,7 +28,7 @@ namespace events{
 		int mouseY;
 		// The ID of the mouse button that was pressed, if any.
 		int button;
-		// Determines if the button is down.
+		// Determines if the button is down. May not be needed presently.
 		bool buttonDown;
 		// Determines if the pressed button has been released. May not be needed presently.
 		bool buttonReleased;
@@ -29,7 +36,6 @@ namespace events{
 		gameEvent(){
 			hasEvents = false;
 			hasQuit = false;
-			keyPressed = NULL;
 			keyDown = false;
 			keyReleased = false;
 			mouseX = 0;
@@ -42,7 +48,7 @@ namespace events{
 		gameEvent& operator=(const gameEvent& otherEvent){
 			this->hasEvents = otherEvent.hasEvents;
 			this->hasQuit = otherEvent.hasQuit;
-			this->keyPressed = otherEvent.keyPressed;
+			this->keysPressed = otherEvent.keysPressed;
 			this->keyDown = otherEvent.keyDown;
 			this->keyReleased = otherEvent.keyReleased;
 			this->mouseX = otherEvent.mouseX;
@@ -55,3 +61,5 @@ namespace events{
 		};
 	};
 }
+
+#endif

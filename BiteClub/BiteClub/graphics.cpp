@@ -40,12 +40,12 @@ void GraphicsEngine::init(){
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void GraphicsEngine::display(){
+void GraphicsEngine::display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
 
-	gluLookAt(0.0, 0.0, -10.0, 2.0, 2.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(camX, camY, camZ, lookX, lookY, lookZ, 0.0f, 1.0f, 0.0f);
 
 	glBegin(GL_TRIANGLE_STRIP);
 		glColor3ub(254, 0, 0);
@@ -65,8 +65,6 @@ gameEvent GraphicsEngine::pollEvents(){
 	SDL_Event eventSDL;
 	gameEvent eventGame;
 
-	eventGame.hasEvents = false;
-
 	while(SDL_PollEvent(&eventSDL)){
 		eventGame.hasEvents = true;
 
@@ -77,6 +75,10 @@ gameEvent GraphicsEngine::pollEvents(){
 		case SDL_MOUSEMOTION:
 			eventGame.mouseX = eventSDL.motion.x;
 			eventGame.mouseY = eventSDL.motion.y;
+			break;
+		case SDL_KEYDOWN:
+			eventGame.keysPressed.push_back((char)eventSDL.key.keysym.sym);
+			eventGame.keyDown = true;
 			break;
 		default:
 			break;
