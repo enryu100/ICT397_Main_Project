@@ -1,21 +1,39 @@
-﻿Build started 23/04/2017 9:10:14 PM.
+﻿Build started 24/04/2017 8:18:02 PM.
      1>Project "C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\BiteClub\BiteClub.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I../dependencies/include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MainGame.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I../dependencies/include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp graphics.cpp lua_Script.cpp main.cpp MainGame.cpp Terrain.cpp Types.cpp
+         Types.cpp
+         Terrain.cpp
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\terrain.cpp(32): warning C4244: '=' : conversion from 'std::streamoff' to 'int', possible loss of data
          MainGame.cpp
      1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\maingame.cpp(35): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\maingame.cpp(36): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\maingame.cpp(39): warning C4018: '<' : signed/unsigned mismatch
+         main.cpp
+         lua_Script.cpp
+         graphics.cpp
+         Camera.cpp
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(49): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(54): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(56): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(59): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(60): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mario\desktop\uni work\uni, fourth year\ict397\ict397 assignment 1\ict397_main_project\biteclub\biteclub\camera.cpp(61): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.exe" /INCREMENTAL /NOLOGO /LIBPATH:../dependencies/lib gl/opengl32.lib gl/freeglut.lib lua/lua5.3.lib SDL/SDL2.lib SDL/SDL2main.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.lib" /MACHINE:X86 Debug\Camera.obj
          Debug\graphics.obj
+         Debug\lua_Script.obj
          Debug\main.obj
          Debug\MainGame.obj
          Debug\Terrain.obj
          Debug\Types.obj
+         LINK : C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.exe not found or not built by the last incremental link; performing full link
          BiteClub.vcxproj -> C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\Debug\BiteClub.exe
      1>Done Building Project "C:\Users\Mario\Desktop\Uni work\Uni, Fourth Year\ICT397\ICT397 Assignment 1\ICT397_Main_Project\BiteClub\BiteClub\BiteClub.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.51
+Time Elapsed 00:00:05.74
