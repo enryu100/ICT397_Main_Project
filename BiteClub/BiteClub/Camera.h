@@ -28,19 +28,18 @@ class Camera{
 		double m_rotateSpeed;
 		double m_moveSpeed;
 
-		//Rotation variables
-		float pitch;
-		float yaw;
-
-		//Position variables
-		types::Vector3D position;
+		//Vector variables
+		types::Vector3D position, forward, right, up;
 
 		// Matrix variables - added by Alfie
 		types::Matrix4x4 viewMatrix;
-		types::Matrix4x4 projMatrix;
 
-		types::Matrix4x4 getRotMatrix(float xRot, float yRot, float zRot);
-		types::Matrix4x4 getTransMatrix(float x, float y, float z);
+		void moveForwardBack(float amount);
+		void moveLeftRight(float amount);
+		void moveUpDown(float amount);
+		void rotateX(float angle);
+		void rotateY(float angle);
+		void rotateZ(float angle);
 };
 
 #endif

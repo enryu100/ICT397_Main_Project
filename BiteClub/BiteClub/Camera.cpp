@@ -6,74 +6,70 @@ using namespace types;
 Camera::Camera(){
 	m_rotateSpeed = 0.0f;
 	m_moveSpeed = 0.0f;
-	pitch = 0.0f;
-	yaw = 0.0f;
-}
-
-void Camera::transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle){
-	Matrix4x4 rotMatrix, transMatrix, transform;
-
+	position = Vector3D(0.0f, 0.0f, 0.0f);
+	right = Vector3D(1.0f, 0.0f, 0.0f);
+	up = Vector3D(0.0f, 1.0f, 0.0f);
+	forward = Vector3D(0.0f, 0.0f, 1.0f);
 	viewMatrix = Matrix4x4(Vector4D(1.0f, 0.0f, 0.0f, 0.0f),
 						   Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
 						   Vector4D(0.0f, 0.0f, 1.0f, 0.0f),
 						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
-
-	rotMatrix = getRotMatrix(deltaXAngle, deltaYAngle, deltaZAngle);
-	transMatrix = getTransMatrix(deltaX, deltaY, deltaZ);
-
-	transform = transMatrix * rotMatrix;
-
-	viewMatrix = transform * viewMatrix;
 }
 
-Matrix4x4 Camera::getRotMatrix(float xRot, float yRot, float zRot){
-	Matrix4x4 xRotMatrix, yRotMatrix, zRotMatrix;
-	Vector4D xAxis, yAxis, zAxis;
-	float xCos, xSin, yCos, ySin, zCos, zSin;
+void Camera::transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle){
+	moveLeftRight(deltaX);
+	moveUpDown(deltaY);
+	moveForwardBack(deltaZ);
+	rotateX(deltaXAngle);
+	rotateY(deltaYAngle);
+	rotateZ(deltaZAngle);
 
-	pitch += xRot;
-	yaw += yRot;
-
-	xAxis = viewMatrix.columns[0];
-	yAxis = viewMatrix.columns[1];
-	zAxis = viewMatrix.columns[2];
-
-	xCos = cos(pitch);
-	xSin = sin(pitch);
-	yCos = cos(yaw);
-	ySin = sin(yaw);
-	zCos = cos(zRot);
-	zSin = sin(zRot);
-
-	xRotMatrix = Matrix4x4(Vector4D(m_rotateSpeed * (xCos + xAxis.x * xAxis.x * (1 - xCos)), m_rotateSpeed * (xAxis.z * xSin + xAxis.y * xAxis.x * (1 - xCos)), m_rotateSpeed * (-xAxis.y * xSin + xAxis.z * xAxis.x * (1 - xCos)), 0.0f).normalise(),
-						   Vector4D(m_rotateSpeed * (-xAxis.z * xSin + xAxis.x * xAxis.y * (1 - xCos)), m_rotateSpeed * (xCos + xAxis.y * xAxis.y * (1 - xCos)), m_rotateSpeed * (xAxis.x * xSin + xAxis.z * xAxis.y * (1 - xCos)), 0.0f).normalise(),
-						   Vector4D(m_rotateSpeed * (xAxis.y * xSin + xAxis.x * xAxis.z * (1 - xCos)), m_rotateSpeed * (-xAxis.x * xSin + xAxis.y * xAxis.z * (1 - xCos)), m_rotateSpeed * (xCos + xAxis.z * xAxis.z * (1 - xCos)), 0.0f).normalise(),
-						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
-
-	// This is a transform on the global y-axis rather than a relative one. This means the camera will not rotate around its local y-axis.
-	yRotMatrix = Matrix4x4(Vector4D(m_rotateSpeed * yCos, 0.0f, m_rotateSpeed * -ySin, 0.0f).normalise(),
-						   Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
-						   Vector4D(m_rotateSpeed * ySin, 0.0f, m_rotateSpeed * yCos, 0.0f).normalise(),
-						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
-
-	zRotMatrix = Matrix4x4(Vector4D(m_rotateSpeed * (zCos + zAxis.x * zAxis.x * (1 - zCos)), m_rotateSpeed * (zAxis.z * zSin + zAxis.y * zAxis.x * (1 - zCos)), m_rotateSpeed * (-zAxis.y * zSin + zAxis.z * zAxis.x * (1 - zCos)), 0.0f).normalise(),
-						   Vector4D(m_rotateSpeed * (-zAxis.z * zSin + zAxis.x * zAxis.y * (1 - zCos)), m_rotateSpeed * (zCos + zAxis.y * zAxis.y * (1 - zCos)), m_rotateSpeed * (zAxis.x * zSin + zAxis.z * zAxis.y * (1 - zCos)), 0.0f).normalise(),
-						   Vector4D(m_rotateSpeed * (zAxis.y * zSin + zAxis.x * zAxis.z * (1 - zCos)), m_rotateSpeed * (-zAxis.x * zSin + zAxis.y * zAxis.z * (1 - zCos)), m_rotateSpeed * (zCos + zAxis.z * zAxis.z * (1 - zCos)), 0.0f).normalise(),
-						   Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
-
-	return(xRotMatrix * yRotMatrix * zRotMatrix);
+	viewMatrix.columns[0] = Vector4D(right.x, right.y, right.z, 0);
+	viewMatrix.columns[1] = Vector4D(up.x, up.y, up.z, 0);
+	viewMatrix.columns[2] = Vector4D(forward.x, forward.y, forward.z, 0);
+	viewMatrix.columns[3] = Vector4D(position.x, position.y, position.z, 1);
 }
 
-Matrix4x4 Camera::getTransMatrix(float x, float y, float z){
-	Matrix4x4 translate;
+void Camera::moveForwardBack(float amount){
+	// This makes the movement occur only on the x and z axes, mimicking walking.
+	position.x += (forward.x * amount * m_moveSpeed);
+	position.z += (forward.z * amount * m_moveSpeed);
+}
 
-	position.x += x;
-	position.y += y;
-	position.z += z;
+void Camera::moveLeftRight(float amount){
+	// This makes the movement occur only on the x and z axes, mimicking walking.
+	position.x += (right.x * amount * m_moveSpeed);
+	position.z += (right.z * amount * m_moveSpeed);
+}
 
-	translate.columns[3].x = position.x;
-	translate.columns[3].y = position.y;
-	translate.columns[3].z = position.z;
+void Camera::moveUpDown(float amount){
+	// This makes the movement occur only on the global y-axis, mimicking jumping.
+	position.y += amount;
+}
 
-	return translate;
+void Camera::rotateX(float angle){
+
+}
+
+void Camera::rotateY(float angle){
+	// THERE MAY BE SOMETHING WRONG IN HERE!
+	Vector3D newForward = forward, newRight = right;
+
+	angle *= m_rotateSpeed;
+	angle *= (PI/180.0f);
+
+	forward.x = (cos(angle + (PI / 2)) * newForward.x) + (cos(angle) * newRight.x);
+	forward.y = (cos(angle + (PI / 2)) * newForward.y) + (cos(angle) * newRight.y);
+	forward.z = (cos(angle + (PI / 2)) * newForward.z) + (cos(angle) * newRight.z);
+
+	right.x = (cos(angle) * newForward.x) + (cos(angle - (PI / 2)) * newRight.x);
+	right.y = (cos(angle) * newForward.y) + (cos(angle - (PI / 2)) * newRight.y);
+	right.z = (cos(angle) * newForward.z) + (cos(angle - (PI / 2)) * newRight.z);
+
+	forward = forward.normalise();
+	right = right.normalise();
+}
+
+void Camera::rotateZ(float angle){
+
 }

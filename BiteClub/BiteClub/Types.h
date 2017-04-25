@@ -70,6 +70,16 @@ namespace types{
 
 			return normalVec;
 		}
+
+		Vector3D crossProduct(Vector3D otherVec){
+			Vector3D crossVec;
+
+			crossVec.x = (this->y * otherVec.z) + (this->z * otherVec.y);
+			crossVec.y = (this->z * otherVec.x) + (this->x * otherVec.z);
+			crossVec.z = (this->x * otherVec.y) + (this->y * otherVec.x);
+
+			return crossVec;
+		}
 	};
 
 	struct Vector4D{

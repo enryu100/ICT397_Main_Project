@@ -40,12 +40,12 @@ void GraphicsEngine::init(){
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void GraphicsEngine::display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ){
+void GraphicsEngine::display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ, double upX, double upY, double upZ){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
 
-	gluLookAt(camX, camY, camZ, lookX, lookY, lookZ, 0.0f, 1.0f, 0.0f);
+	gluLookAt(camX, camY, camZ, lookX, lookY, lookZ, upX, upY, upZ);
 
 	glBegin(GL_TRIANGLE_STRIP);
 		glColor3ub(254, 0, 0);
