@@ -23,17 +23,25 @@ void MainGame::initSystems(char* terrainFile){
 
 	// Temp camera init. Do this from a file later.
 	player.setMoveSpeed(1.0);
-	player.setRotateSpeed(1.0);
+	player.setRotateSpeed(100.0);
 }
 
 void MainGame::processInput(){
 	events::gameEvent newEvent = graphicsEng.pollEvents();
-	float xChange = 0.0f, zChange = 0.0f, pitchChange, yawChange;
+	float xChange = 0.0f, zChange = 0.0f, pitchChange = 0.0f, yawChange = 0.0f;
 
 	if(newEvent.hasEvents){
 		// Change camera view (mouse move)
-		yawChange = newEvent.mouseX - gameEvnt.mouseX;
-		pitchChange = newEvent.mouseY - gameEvnt.mouseY;
+		//yawChange = newEvent.mouseX - gameEvnt.mouseX;
+		//pitchChange = newEvent.mouseY - gameEvnt.mouseY;
+		if(newEvent.mouseX > gameEvnt.mouseX)
+			yawChange = 1.0f;
+		else
+			yawChange = -1.0f;
+		if(newEvent.mouseY > gameEvnt.mouseY)
+			pitchChange = 1.0f;
+		else
+			pitchChange = -1.0f;
 		// Perform action (button/key press)
 		if(newEvent.keyDown){
 			for(int index = 0; index < newEvent.keysPressed.size(); index++){
@@ -62,7 +70,9 @@ void MainGame::processInput(){
 
 		// Test code
 		types::Matrix4x4 temp = player.getViewMatrix();
-		std::cout << "Look-at point: " << temp.columns[2].x << ", " << temp.columns[2].y << ", " << temp.columns[2].z << std::endl;
+		std::cout << "Look-at point: " << temp.columns[2].x << ", " << temp.columns[2].y << ", " << temp.columns[2].z << std::endl
+				  << "Right: " << temp.columns[0].x << ", " << temp.columns[0].y << ", " << temp.columns[0].z << std::endl
+				  << "Position: " << temp.columns[3].x << ", " << temp.columns[3].y << ", " << temp.columns[3].z << std::endl;
 
 		if(newEvent.hasQuit)
 			currentState = GameState::EXIT;
@@ -77,6 +87,8 @@ void MainGame::gameLoop(){
 	while(currentState != GameState::EXIT){
 		view = player.getViewMatrix();
 		processInput();
-		graphicsEng.display(view.columns[3].x, view.columns[3].y, view.columns[3].z, view.columns[2].x, view.columns[2].y, view.columns[2].z);
+		graphicsEng.display(view.columns[3].x, view.columns[3].y, view.columns[3].z,
+						    (view.columns[2].x + view.columns[3].x), (view.columns[2].y + view.columns[3].y), (view.columns[2].z + view.columns[3].z),
+							view.columns[1].x, view.columns[1].y, view.columns[1].z);
 	}
 }

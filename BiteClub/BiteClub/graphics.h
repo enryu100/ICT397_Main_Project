@@ -33,7 +33,7 @@ namespace graphics{
 		~GraphicsEngine();
 		
 		void init();
-		void display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ);
+		void display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ, double upX, double upY, double upZ);
 		events::gameEvent pollEvents();
 		void getHeightfieldData(const std::vector<unsigned char> data);
 
