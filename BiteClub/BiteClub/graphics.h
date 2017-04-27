@@ -105,6 +105,13 @@ namespace graphics{
 		*/
 		events::gameEvent pollEvents();
 		/**
+		* \fn setScales
+		* @brief sets scale variables for heightmap
+		* @param scal the y-axis scale
+		* @param xzscal the z- and x-axis scale
+		*/
+		void setScales(float scal, float xzscal);
+		/**
 		* @brief Retrives data for a heightfield.
 		* @param data - The heightfield data.
 		*

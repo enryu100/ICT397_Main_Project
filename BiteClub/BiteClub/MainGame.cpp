@@ -32,8 +32,10 @@ void MainGame::initSystems(string initFile){
 	}
 
 	gameTerrain.loadHeightfield(terrainFile);
+	gameTerrain.setScale(100.0f, 0.5f, 100.0f);
 	graphicsEng.init(modelFiles);
 	graphicsEng.getHeightfieldData(gameTerrain.getTerrainData());
+	graphicsEng.setScales(gameTerrain.getYScale(), gameTerrain.getXScale());
 
 	// Temp camera init. Do this from a file later.
 	player.setMoveSpeed(1.0);
@@ -50,12 +52,20 @@ void MainGame::processInput(){
 		//pitchChange = newEvent.mouseY - gameEvnt.mouseY;
 		if(newEvent.mouseX > gameEvnt.mouseX)
 			yawChange = 1.0f;
-		else
-			yawChange = -1.0f;
+		else{
+			if(newEvent.mouseX < gameEvnt.mouseX)
+				yawChange = -1.0f;
+			else
+				yawChange = 0.0f;
+		}
 		if(newEvent.mouseY > gameEvnt.mouseY)
 			pitchChange = 1.0f;
-		else
-			pitchChange = -1.0f;
+		else{
+			if(newEvent.mouseY < gameEvnt.mouseY)
+				pitchChange = -1.0f;
+			else
+				pitchChange = 0.0f;
+		}
 		// Perform action (button/key press)
 		if(newEvent.keyDown){
 			for(int index = 0; index < newEvent.keysPressed.size(); index++){
