@@ -11,14 +11,28 @@ MainGame::~MainGame(void){
 
 }
 
-void MainGame::run(char* terrainFile){
-	initSystems(terrainFile);
+void MainGame::run(string initFile){
+	initSystems(initFile);
 	gameLoop();
 }
 
-void MainGame::initSystems(char* terrainFile){
+void MainGame::initSystems(string initFile){
+	string terrainFile;
+	int numModels;
+	std::vector<string> modelFiles;
+
+	fileLoader.Load(initFile.c_str());
+
+	terrainFile = fileLoader.Read_Variable_String("terrainFile");
+
+	numModels = fileLoader.Read_Variable_Int("numModels");
+	for(int index = 0; index < numModels; index++){
+		string fileString = "modelFile" + (index+1);
+		modelFiles.push_back(fileLoader.Read_Variable_String(fileString.c_str()));
+	}
+
 	gameTerrain.loadHeightfield(terrainFile);
-	graphicsEng.init();
+	graphicsEng.init(modelFiles);
 	graphicsEng.getHeightfieldData(gameTerrain.getTerrainData());
 
 	// Temp camera init. Do this from a file later.
