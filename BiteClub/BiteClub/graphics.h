@@ -11,10 +11,6 @@
 *
 * Model loaders! Probably an OBJECT loader, to be precise.
 */
-
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
-
 #pragma once
 
 #include <SDL/SDL.h>
@@ -36,11 +32,13 @@ namespace graphics{
 		void display(double camX, double camY, double camZ, double lookX, double lookY, double lookZ, double upX, double upY, double upZ);
 		events::gameEvent pollEvents();
 		void getHeightfieldData(const std::vector<unsigned char> data);
+		void setScales(float scal, float xzScal);
 
 	private:
 		SDL_Window* window;
 		int screenWidth;
 		int screenHeight;
+		float scale, xzscale;
 		std::vector<unsigned char> heightfieldData;
 		std::vector<Model> models;  //To store model data. Models are going to have a position and array (or whatever) of points to draw. Don't uncomment this yet.
 
@@ -64,5 +62,3 @@ namespace graphics{
 		// [structure] modelData; // Some sort of structure to store model data. Array? Pointer? Have to look this up. Probably use pointers here too.
 	};
 }
-
-#endif

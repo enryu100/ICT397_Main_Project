@@ -4,8 +4,6 @@
 * Purpose: to encapsulate and manage the data required to render a terrain in 3D space.
 */
 
-#ifndef TERRAIN_H_
-#define TERRAIN_H_
 
 #pragma once
 
@@ -41,5 +39,3 @@ namespace terrain{
 		unsigned char getHeightColour(int xPos, int zPos);
 	};
 }
-
-#endif

@@ -82,6 +82,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GameFactory.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="lua_Script.cpp" />
     <ClCompile Include="main.cpp" />
@@ -92,6 +94,8 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="events.h" />
+    <ClInclude Include="GameFactory.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="lua_Script.h" />
     <ClInclude Include="MainGame.h" />
