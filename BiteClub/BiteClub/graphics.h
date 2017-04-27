@@ -15,11 +15,14 @@
 
 #pragma once
 
+#include <iostream>
+#include <string>
 #include <SDL/SDL.h>
 #include <GL/freeglut.h>
 #include <vector>
 #include "Events.h"
 #include "Types.h"
+#include "ObjLoader.h"
 
 namespace graphics{
 
@@ -72,7 +75,7 @@ namespace graphics{
 		* probably take in all of the data it needs at this point as well, but this is
 		* currently done separately.
 		*/
-		void init();
+		void init(std::vector<std::string> modelFiles);
 		/**
 		* @brief Displays the game world and its contents from a camera view.
 		* @param camX - The x-co-ordinate of the camera's position in the game space.
@@ -137,6 +140,12 @@ namespace graphics{
 		void drawModels(){};
 	};
 
+	struct ModelData{
+		std::vector<types::Vector3D> vertices;
+		std::vector<types::Vector2D> uvs;
+		std::vector<types::Vector3D> normals;
+	};
+
 	/**
 	* @class Model
 	* @brief A class that stores model data and all data relating to it.
@@ -162,43 +171,42 @@ namespace graphics{
 		~Model(){};
 
 		/**
-		* @brief [STUB] Loads all data for the model.
+		* @brief Loads all data for the model.
 		*
-		* loadData is supposed to load the model's data from a file. This will hopefully be
-		* implemented soon.
+		* loadData loads the model's data from a file using the object file loader. This
+		* gives it limitations, but it should suffice currently.
 		*/
-		void loadData(){};
+		bool loadData(std::string modelFile);
 		/**
-		* @brief [INCOMPLETE] Gets the model data.
-		* @return const [structure] - A structure containing the model data
+		* @brief Gets the model data.
+		* @return const ModelData& - A structure containing the model data
 		*
-		* getData is presently not operating, but it is intended to return the model data in
-		* a structure (or maybe a pointer to a structure) to the calling function.
+		* getData simply returns the model's vertex, UV, and normal data to the calling
+		* function.
 		*/
-		// const [structure] getData();
+		const ModelData& getData(){return data;};
 		/**
-		* @brief [STUB] Gets the current position of the model.
-		* @return Vector3D - A vector containing the model's position
+		* @brief Gets the current position of the model.
+		* @return const Vector3D& - A vector containing the model's position
 		*
-		* getModelPos is supposed to return the model's current position to the calling
-		* function. This will hopefully be implemented soon.
+		* getModelPos simply returns the model's current position to the calling function.
 		*/
-		types::Vector3D getModelPos(){};
+		const types::Vector3D& getModelPos(){return modelPos;};
 		/**
 		* @brief Sets a new position for the model.
 		* param newPos - The new position
 		*
 		* setModelPos sets the model's position to the position supplied.
 		*/
-		void setModelPos(types::Vector3D newPos);
+		void setModelPos(const types::Vector3D& newPos){modelPos = newPos;};
 
 	private:
-		/// The ID of the model. May not be used...
+		/// The ID of the model. May not be used presently...
 		int modelID;
 		/// The position of the model.
 		types::Vector3D modelPos;
 		/// The model data.
-		// [structure] modelData; // Some sort of structure to store model data. Array? Pointer? Have to look this up. Probably use pointers here too.
+		ModelData data;
 	};
 }
 

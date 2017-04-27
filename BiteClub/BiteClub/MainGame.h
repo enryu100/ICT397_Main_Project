@@ -14,7 +14,9 @@
 #include "Graphics.h"
 #include "Terrain.h"
 #include "Camera.h"
+#include "lua_Script.h"
 #include <iostream>
+#include <vector>
 
 /// An enumeration to make the game state transitions easier.
 enum class GameState {PLAY, EXIT};
@@ -61,7 +63,7 @@ public:
 	*
 	* run simply initialises and runs the game.
 	*/
-	void run(char* terrainFile /*Temporary - will be init file name*/);
+	void run(std::string initFile);
 
 private:
 	/// The graphics engine.
@@ -74,6 +76,7 @@ private:
 	Camera player;
 	/// The current state the game is in, be it STOP or PLAY.
 	GameState currentState;
+	lua_Script fileLoader;
 
 	/**
 	* @brief Initialises each component of the game engine.
@@ -83,7 +86,7 @@ private:
 	* initSystems sets each component of the game engine (graphics engine, terrain, camera)
 	* to an initial state. These states are (or will be) provided by a values from a file.
 	*/
-	void initSystems(char* terrainFile);
+	void initSystems(std::string initFile);
 	/**
 	* @brief Processes any user input and passes it to the game components.
 	*
