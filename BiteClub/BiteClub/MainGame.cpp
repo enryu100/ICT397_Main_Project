@@ -17,17 +17,21 @@ void MainGame::run(string initFile){
 }
 
 void MainGame::initSystems(string initFile){
-	string terrainFile;
+	string terrainFile, fileString = "modelFile1";
 	int numModels;
 	std::vector<string> modelFiles;
 
 	fileLoader.Load(initFile.c_str());
+	cout << "init" << endl;
 
 	terrainFile = fileLoader.Read_Variable_String("terrainFile");
 
+	cout << "terrain" << endl;
+
 	numModels = fileLoader.Read_Variable_Int("numModels");
 	for(int index = 0; index < numModels; index++){
-		string fileString = "modelFile" + (index+1);
+		int modelNum = index + 1;
+
 		modelFiles.push_back(fileLoader.Read_Variable_String(fileString.c_str()));
 	}
 

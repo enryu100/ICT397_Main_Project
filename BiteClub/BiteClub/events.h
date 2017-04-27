@@ -1,38 +1,57 @@
-#ifndef EVENTS_H
-#define EVENTS_H
-
+/**
+* Events.h
+*
+* Author: Alfred Malone
+* Date: 20/4/2017
+*
+* Defines an event class for handling input events in the game.
+*/
 #pragma once
 
 #include <vector>
 
 namespace events{
 	/**
-	* A generic structure to encapsulate SDL events. This will be used to pass information to
-	* the main game loop about input, letting the game loop control what happens with said
-	* input.
+	* @struct gameEvent
+	* @brief Provides a structure for holding data from input events in a game.
+	*
+	* This struct is to be used for getting any changes from input events that may have
+	* occurred during a game's execution.
+	*
+	* @author Alfred Malone
+	* @version 01
+	* @date 20/4/2017 Alfred Malone, created type
+	* 
+	* @author Alfred Malone
+	* @version 02
+	* @date 27/4/2017 Alfred Malone, added Doxygen comments
 	*/
 	struct gameEvent{
-		// Determines if any events have occurred.
+		/// Determines if any events have occurred.
 		bool hasEvents;
-		// Determines if the game has been quit.
+		/// Determines if the game has been quit.
 		bool hasQuit;
-		// Which keys on the keyboard were pressed, if any.
+		/// Which keys on the keyboard were pressed, if any.
 		std::vector<char> keysPressed;
-		// Determines if any key is down. May not be needed presently.
+		/// Determines if any key is down. May not be needed presently.
 		bool keyDown;
-		// Determines if any key has been released. May not be needed presently.
+		/// Determines if any key has been released. May not be needed presently.
 		bool keyReleased;
-		// The x position of the cursor on the screen.
+		/// The x position of the cursor on the screen.
 		int mouseX;
-		// The y position of the cursor on the screen.
+		/// The y position of the cursor on the screen.
 		int mouseY;
-		// The ID of the mouse button that was pressed, if any.
+		/// The ID of the mouse button that was pressed, if any.
 		int button;
-		// Determines if the button is down. May not be needed presently.
+		/// Determines if the button is down. May not be needed presently.
 		bool buttonDown;
-		// Determines if the pressed button has been released. May not be needed presently.
+		/// Determines if the pressed button has been released. May not be needed presently.
 		bool buttonReleased;
 
+		/**
+		* The constructor for a gameEvent variable.
+		* Initialises the member variables.
+		*/
 		gameEvent(){
 			hasEvents = false;
 			hasQuit = false;
@@ -45,6 +64,14 @@ namespace events{
 			buttonReleased = false;
 		};
 
+		/**
+		* @brief Copies the contents of another gameEvent to this one.
+		* @param otherEvent - The event being copied from
+		* @return gameEvent& - The current event
+		*
+		* This is merely an overloaded assignment operator, adjusted so that it only copies
+		* the contents from one gameEvent variable to another.
+		*/
 		gameEvent& operator=(const gameEvent& otherEvent){
 			this->hasEvents = otherEvent.hasEvents;
 			this->hasQuit = otherEvent.hasQuit;
@@ -61,5 +88,3 @@ namespace events{
 		};
 	};
 }
-
-#endif

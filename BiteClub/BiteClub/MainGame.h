@@ -6,9 +6,6 @@
 *
 * The MainGame class runs the whole shebang, with all other engines under its control.
 */
-#ifndef MAINGAME_H
-#define MAINGAME_H
-
 #pragma once
 
 #include "Graphics.h"
@@ -37,10 +34,13 @@ enum class GameState {PLAY, EXIT};
 * @version 02
 * @date 26/4/2017 Alfred Malone, added Doxygen comments (and plenty more previously)
 *
-* @todo Get collision detection, model loading, and every other required feature working.
-* We're toast.
+* @author Alfred Malone
+* @version 03
+* @date 27/4/2017 Alfred Malone, added file loader for init from files
 *
-* @bug What isn't? I blame my shoddy redo of the Camera class.
+* @todo Get collision detection and the camera working. We're toast.
+*
+* @bug My shoddy redo of the Camera class.
 */
 class MainGame
 {
@@ -58,8 +58,7 @@ public:
 
 	/**
 	* @brief Initialises and runs the game.
-	* @param terrainFile - The file name of the terrain's heightmap. To be changed to an init
-	* file later.
+	* @param initFile - The file name of the initialising file
 	*
 	* run simply initialises and runs the game.
 	*/
@@ -76,15 +75,15 @@ private:
 	Camera player;
 	/// The current state the game is in, be it STOP or PLAY.
 	GameState currentState;
+	/// The loader and reader of the initialising file.
 	lua_Script fileLoader;
 
 	/**
 	* @brief Initialises each component of the game engine.
-	* @param terrainFile - The file name of the terrain's heightmap. To be changed to an init
-	* file later.
+	* @param initFile - The file name of the initialising file
 	*
 	* initSystems sets each component of the game engine (graphics engine, terrain, camera)
-	* to an initial state. These states are (or will be) provided by a values from a file.
+	* to an initial state. These states are provided by a values from a file.
 	*/
 	void initSystems(std::string initFile);
 	/**
@@ -105,4 +104,3 @@ private:
 	void gameLoop();
 };
 
-#endif
