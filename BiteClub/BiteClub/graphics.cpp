@@ -13,8 +13,16 @@ GraphicsEngine::GraphicsEngine(){
 GraphicsEngine::~GraphicsEngine(){
 }
 
-void GraphicsEngine::init(){
+void GraphicsEngine::init(vector<string> modelFiles){
 	SDL_GLContext context;
+
+	for(int index = 0; index < modelFiles.size(); index++){
+		Model newModel;
+		if(newModel.loadData(modelFiles[index])){
+			models.push_back(newModel);
+			cout << modelFiles[index] << " has been loaded!" << endl;
+		}
+	}
 
 	// Initialise SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -55,6 +63,16 @@ void GraphicsEngine::display(double camX, double camY, double camZ, double lookX
 		glVertex3f(2.0f, 1.0f, 1.0f);
 		glVertex3f(2.0f, 3.0f, 2.0f);
 	glEnd();
+
+	for(int index = 0; index < models.size(); index++){
+		ModelData modelInfo = models[index].getData();
+
+		glBegin(GL_TRIANGLE_STRIP);
+		for(int vertIndex = 0; vertIndex < modelInfo.vertices.size(); vertIndex++){
+			glVertex3f(modelInfo.vertices[vertIndex].x, modelInfo.vertices[vertIndex].y, modelInfo.vertices[vertIndex].z); 
+		}
+		glEnd();
+	}
 
 	drawTerrain();
 
@@ -115,4 +133,8 @@ void GraphicsEngine::drawTerrain(){
 		}
 		glEnd();
 	}
+}
+
+bool Model::loadData(string modelFile){
+	return loader::loadObj(modelFile.c_str(), data.vertices, data.uvs, data.normals);
 }

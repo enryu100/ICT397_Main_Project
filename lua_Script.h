@@ -14,11 +14,36 @@ using namespace std;
 class lua_Script
 {
 public:
+		/**
+        *@brief default constructer for Lua, assigns a newstate/libs
+         */
 	lua_Script(void);
+		/**
+        *@brief default deconstructer for Date
+         */
 	~lua_Script(void);
+		/**
+         *@brief Loads in a lua file
+         *@return void
+		 *@param filename - const char*
+         */
 	void Load(const char* fileName);
+		/**
+         *@brief closes the lua file
+         *@return void
+         */
 	void Close();
+		/**
+         *@brief Reads in an int from a lua file
+         *@return int
+		 *@param varName - const char*
+         */
 	int Read_Variable_Int(const char* varName);
+		/**
+         *@brief Reads in a string from a lua file
+         *@return string
+		 *@param varName - const char*
+         */
 	string Read_Variable_String(const char* varName);
 
 private:

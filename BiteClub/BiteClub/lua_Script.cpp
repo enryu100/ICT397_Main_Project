@@ -24,7 +24,7 @@ void lua_Script::Close(){
 int lua_Script::Read_Variable_Int(const char* varName){
 	lua_settop(L,0);
 	lua_getglobal(L, varName);
-	int intVar = (int)lua_tostring(L, 1);
+	int intVar = (int)lua_tonumber(L, 1);
 	lua_pop(L, 1);
 	return(intVar);
 }
