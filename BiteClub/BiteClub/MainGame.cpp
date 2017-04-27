@@ -33,6 +33,7 @@ void MainGame::initSystems(string initFile){
 
 	gameTerrain.loadHeightfield(terrainFile);
 	gameTerrain.setScale(100.0f, 0.5f, 100.0f);
+
 	graphicsEng.init(modelFiles);
 	graphicsEng.getHeightfieldData(gameTerrain.getTerrainData());
 	graphicsEng.setScales(gameTerrain.getYScale(), gameTerrain.getXScale());
