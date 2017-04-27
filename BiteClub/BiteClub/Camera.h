@@ -1,9 +1,7 @@
 /**
-* 
+* @author Brandon Lim
+* @author Alfred Malone
 */
-#ifndef CAMERA_H
-#define CAMERA_H
-
 #pragma once
 
 #define PI 3.1415962654
@@ -41,5 +39,3 @@ class Camera{
 		void rotateY(float angle);
 		void rotateZ(float angle);
 };
-
-#endif
