@@ -123,6 +123,8 @@ namespace graphics{
 		int screenHeight;
 		/// The heightfield data.
 		std::vector<unsigned char> heightfieldData;
+		/// Scale data for heightfield
+		float scale, xzscale;
 		/// The models of the game's objects.
 		std::vector<Model> models;  //To store model data. Models are going to have a position and array (or whatever) of points to draw.
 
