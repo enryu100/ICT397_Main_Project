@@ -73,7 +73,7 @@ namespace types{
 		* and y values.
 		*/
 		Vector2D normalise(){
-			Vector2D normalVec;
+			Vector2D normalVec = Vector2D();
 			float length = this->length();
 
 			if(length != 0){
@@ -149,7 +149,7 @@ namespace types{
 		* y, and z values.
 		*/
 		Vector3D normalise(){
-			Vector3D normalVec;
+			Vector3D normalVec = Vector3D();
 			float length = this->length();
 
 			if(length != 0){
@@ -249,7 +249,7 @@ namespace types{
 		* y, and z values.
 		*/
 		Vector4D normalise(){
-			Vector4D normalVec;
+			Vector4D normalVec = Vector4D();
 			float length = this->length();
 
 			if(length != 0){
@@ -337,3 +337,4 @@ namespace types{
 	*/
 	Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
 }
+

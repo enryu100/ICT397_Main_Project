@@ -11,9 +11,9 @@ Camera::Camera(){
 	up = Vector3D(0.0f, 1.0f, 0.0f);
 	forward = Vector3D(0.0f, 0.0f, 1.0f);
 	viewMatrix = Matrix4x4(Vector4D(1.0f, 0.0f, 0.0f, 0.0f),
-			       Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
-			       Vector4D(0.0f, 0.0f, 1.0f, 0.0f),
-			       Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+	                       Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
+	                       Vector4D(0.0f, 0.0f, 1.0f, 0.0f),
+	                       Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Camera::transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle){

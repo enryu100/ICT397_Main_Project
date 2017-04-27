@@ -99,6 +99,13 @@ namespace graphics{
 		*/
 		events::gameEvent pollEvents();
 		/**
+		* \fn setScales
+		* @brief sets scale variables for heightmap
+		* @param scal the y-axis scale
+		* @param xzscal the z- and x-axis scale
+		*/
+		void setScales(float scal, float xzscal);
+		/**
 		* @brief Retrives data for a heightfield.
 		* @param data - The heightfield data.
 		*
@@ -117,6 +124,8 @@ namespace graphics{
 		int screenHeight;
 		/// The heightfield data.
 		std::vector<unsigned char> heightfieldData;
+		/// Scale data for heightfield
+		float scale, xzscale;
 		/// The models of the game's objects.
 		std::vector<Model> models;
 
