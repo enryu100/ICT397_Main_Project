@@ -1,8 +1,8 @@
+#ifndef LUA_SCRIPT_H
+#define LUA_SCRIPT_H
 
 //For calling functions from a lua file simply call Load and close when done with the file
 //For setting variables from a file use Load to open the file, close to close the file and Read_Variable_(var type) to assign variables
-
-#pragma once
 
 extern "C"{
 	#include "Lua\lua.h"
@@ -26,3 +26,5 @@ private:
 
 	//int Read_Variable_Int(const char* varName);
 };
+
+#endif // lua_Script_h

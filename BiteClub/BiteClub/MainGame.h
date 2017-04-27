@@ -1,3 +1,6 @@
+#ifndef MAINGAME_H
+#define MAINGAME_H
+
 /**
 * MainGame.h
 *
@@ -64,3 +67,5 @@ private:
 	void processInput();
 	void gameLoop();
 };
+
+#endif

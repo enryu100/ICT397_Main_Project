@@ -18,13 +18,11 @@ void MainGame::run(char* terrainFile){
 
 void MainGame::initSystems(char* terrainFile){
 	gameTerrain.loadHeightfield(terrainFile);
-	gameTerrain.setScale(100.0f,0.5f, 100.0f);
 	graphicsEng.init();
 	graphicsEng.getHeightfieldData(gameTerrain.getTerrainData());
-	graphicsEng.setScales(gameTerrain.getYScale(), gameTerrain.getXScale());
 
 	// Temp camera init. Do this from a file later.
-	player.setMoveSpeed(2.0);
+	player.setMoveSpeed(1.0);
 	player.setRotateSpeed(100.0);
 }
 
@@ -38,23 +36,15 @@ void MainGame::processInput(){
 		//pitchChange = newEvent.mouseY - gameEvnt.mouseY;
 		if(newEvent.mouseX > gameEvnt.mouseX)
 			yawChange = 1.0f;
-		else{
-			if(newEvent.mouseX < gameEvnt.mouseX)
-				yawChange = -1.0f;
-			else
-				yawChange = 0.0f;
-		}
+		else
+			yawChange = -1.0f;
 		if(newEvent.mouseY > gameEvnt.mouseY)
 			pitchChange = 1.0f;
-		else{
-			if(newEvent.mouseY < gameEvnt.mouseY)
-				pitchChange = -1.0f;
-			else
-				pitchChange = 0.0f;
-		}
+		else
+			pitchChange = -1.0f;
 		// Perform action (button/key press)
 		if(newEvent.keyDown){
-			for(unsigned int index = 0; index < newEvent.keysPressed.size(); index++){
+			for(int index = 0; index < newEvent.keysPressed.size(); index++){
 				std::cout << newEvent.keysPressed.at(index);
 				switch(newEvent.keysPressed.at(index)){
 				case 'w':

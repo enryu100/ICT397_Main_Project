@@ -1,3 +1,6 @@
+#ifndef TYPES_H
+#define TYPES_H
+
 #pragma once
 
 #include <math.h>
@@ -22,7 +25,7 @@ namespace types{
 		}
 
 		Vector2D normalise(){
-			Vector2D normalVec = Vector2D();
+			Vector2D normalVec;
 			float length = this->length();
 
 			if(length != 0){
@@ -56,7 +59,7 @@ namespace types{
 		}
 
 		Vector3D normalise(){
-			Vector3D normalVec = Vector3D();
+			Vector3D normalVec;
 			float length = this->length();
 
 			if(length != 0){
@@ -107,7 +110,7 @@ namespace types{
 		}
 
 		Vector4D normalise(){
-			Vector4D normalVec = Vector4D();
+			Vector4D normalVec;
 			float length = this->length();
 
 			if(length != 0){
@@ -142,3 +145,5 @@ namespace types{
 	Vector4D operator*(const Vector4D& v, const Matrix4x4& m);
 	Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
 }
+
+#endif

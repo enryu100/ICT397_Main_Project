@@ -88,11 +88,6 @@ gameEvent GraphicsEngine::pollEvents(){
 	return eventGame;
 }
 
-void GraphicsEngine::setScales(float scal, float xzScal){
-	scale = scal;
-	xzscale = xzScal;
-}
-
 void GraphicsEngine::getHeightfieldData(const vector<unsigned char> data){
 	heightfieldData = data;
 }
@@ -101,7 +96,7 @@ void GraphicsEngine::drawTerrain(){
 	// Square root because the actual size is all of the elements. This is, of course, assuming that the heightfield has the same dimensions for width and height.
 	int terrainSize = (int)sqrt((double)heightfieldData.size());
 	unsigned char heightColour;
-	float height;
+	float height, scale = 0.5f;
 
 	for(int zVal = 0; zVal < terrainSize; zVal++){
 		glBegin(GL_TRIANGLE_STRIP);
@@ -109,13 +104,13 @@ void GraphicsEngine::drawTerrain(){
 			heightColour = heightfieldData.at((zVal * terrainSize) + xVal);
 			glColor3ub(heightColour, heightColour, heightColour);
 			height = (float)(heightColour * scale);
-			glVertex3f((float)xVal * xzscale, height, (float)zVal * xzscale);
+			glVertex3f((float)xVal * scale, height, (float)zVal * scale);
 
 			if((zVal + 1) < terrainSize){
 				heightColour = heightfieldData.at(((zVal + 1) * terrainSize) + xVal);
 				glColor3ub(heightColour, heightColour, heightColour);
 				height = (float)(heightColour * scale);
-				glVertex3f((float)xVal * xzscale, height, (float)(zVal + 1) * xzscale);
+				glVertex3f((float)xVal * scale, height, (float)(zVal + 1) * scale);
 			}
 		}
 		glEnd();

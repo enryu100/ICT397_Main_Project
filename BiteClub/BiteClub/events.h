@@ -1,3 +1,6 @@
+#ifndef EVENTS_H
+#define EVENTS_H
+
 #pragma once
 
 #include <vector>
@@ -58,3 +61,5 @@ namespace events{
 		};
 	};
 }
+
+#endif
