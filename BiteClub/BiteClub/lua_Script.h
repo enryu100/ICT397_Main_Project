@@ -1,3 +1,16 @@
+/**
+* @class lua_Script.h
+* @brief A class that deals with all lua files
+*
+* The lua class is responsible for loading, running and assigning values from lua files
+*
+* @author Ben Porter
+* @version 01
+* @date 21/4/2017 
+* @todo possible read in object type parameters if we need it
+*/
+
+
 #ifndef LUA_SCRIPT_H
 #define LUA_SCRIPT_H
 

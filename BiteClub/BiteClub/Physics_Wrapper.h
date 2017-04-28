@@ -1,6 +1,21 @@
 #ifndef PHYSICS_WRAPPER_H
 #define PHYSICS_WRAPPER_H
 
+/**
+* @class Physiscs_Wrapper.h
+* @brief A class that deals with the bullet physics engine
+*
+* The physics class is responsible for managing and creating physics objects
+*
+* @author Ben Porter
+* @version 01
+* @date 19/4/2017 
+* @bug Linker errors, removed from main project for now
+* @todo add support for more types of triangle mesh and maybe heightfield
+*/
+
+
+
 //#include <string>
 #include "Bullet\btBulletCollisionCommon.h"
 #include "Bullet\btBulletDynamicsCommon.h"

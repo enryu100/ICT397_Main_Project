@@ -6,6 +6,9 @@
 * issues.
 * @author Brandon Lim
 * @author Alfred Malone
+* @author Ben Porter
+* @date 28/04/2017 changed how camera class recieves it's lookat values, rotate x, y no longer gets used
+* @date 
 */
 #pragma once
 
@@ -45,8 +48,8 @@ class Camera{
 		* @param deltaX the distance to move along the X-axis
 		* @param deltaY the distance to move along the Y-axis
 		* @param deltaZ the distance to move along the Z-axis
-		* @param deltaXAngle the amount to rotate around the X-axis
-		* @param deltaYAngle the amount to rotate around the y-axis
+		* @param deltaXAngle Horizontal angle, Used to set LookAt
+		* @param deltaYAngle Vertical angle, used to set LookAt
 		* @param deltaZAngle the amount to rotate around the Z-axis
 		*/
 		void transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle);
@@ -98,14 +101,14 @@ class Camera{
 		/**
 		* \fn rotateX
 		* rotation around the x-axis.
-		* A function for rotating the camera around the x-Axis
+		* A function for rotating the camera around the x-Axis, not used
 		* @param angle the angle of rotation
 		*/
 		void rotateX(float angle);
 		/**
 		* \fn rotateY
 		* rotation around the Y-axis.
-		* A function for rotating the camera around the Y-Axis
+		* A function for rotating the camera around the Y-Axis, not used
 		* @param angle the angle of rotation
 		*/
 		void rotateY(float angle);

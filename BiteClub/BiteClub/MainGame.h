@@ -38,7 +38,10 @@ enum class GameState {PLAY, EXIT};
 * @version 03
 * @date 27/4/2017 Alfred Malone, added file loader for init from files
 *
-* @todo Get collision detection and the camera working. We're toast.
+* @author Ben Porter
+* @version 04
+* @date 27/4/2017 Changed how game recieves input from mouse and how it uses camera functions
+* @todo Get collision detection. We're toast.
 *
 * @bug My shoddy redo of the Camera class.
 */
