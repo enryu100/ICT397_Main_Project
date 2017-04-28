@@ -123,14 +123,14 @@ void GraphicsEngine::drawTerrain(){
 			heightColour = heightfieldData.at((zVal * terrainSize) + xVal);
 			glColor3ub(heightColour, heightColour, heightColour);
 			glTexCoord2f(texLeft, texBottom);
-			height = (float)(heightColour * scale);
+			height = (float)(heightColour * scale) - 100.0f;
 			glVertex3f((float)xVal * xzscale, height, (float)zVal * xzscale);
 
 			if((zVal + 1) < terrainSize){
 				heightColour = heightfieldData.at(((zVal + 1) * terrainSize) + xVal);
 				glColor3ub(heightColour, heightColour, heightColour);
 				glTexCoord2f(texLeft, texTop);
-				height = (float)(heightColour * scale);
+				height = (float)(heightColour * scale) - 100.0f;
 				glVertex3f((float)xVal * xzscale, height, (float)(zVal + 1) * xzscale);
 			}
 		}
