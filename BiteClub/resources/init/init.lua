@@ -2,4 +2,5 @@
 --Provides initialising values for the game engine
 
 terrainFile = "../resources/terrain/height128.raw"
-numModels = 0
+numModels = 1
+modelFile1 = "../resources/models/cube.obj"
