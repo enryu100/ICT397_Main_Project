@@ -8,6 +8,7 @@ GraphicsEngine::GraphicsEngine(){
 	window = nullptr;
 	screenWidth = 1024;
 	screenHeight = 720;
+	textureMap = false;
 }
 
 GraphicsEngine::~GraphicsEngine(){
@@ -102,18 +103,33 @@ void GraphicsEngine::drawTerrain(){
 	int terrainSize = (int)sqrt((double)heightfieldData.size());
 	unsigned char heightColour;
 	float height;
+	float texLeft, texBottom, texTop;
+
+	//Stuff for texturing (incomplete?)
+	if(textureMap){
+		glEnable(GL_TEXTURE_2D);
+		//glBindTexture(GL_TEXTURE_2D, texture.getID());
+	}
 
 	for(int zVal = 0; zVal < terrainSize; zVal++){
 		glBegin(GL_TRIANGLE_STRIP);
 		for(int xVal = 0; xVal < terrainSize; xVal++){
+
+			//calc texture coords
+			texLeft = (float)xVal/terrainSize;
+			texBottom = (float)zVal/terrainSize;
+			texTop = (float)(zVal + 1)/terrainSize;
+
 			heightColour = heightfieldData.at((zVal * terrainSize) + xVal);
 			glColor3ub(heightColour, heightColour, heightColour);
+			glTexCoord2f(texLeft, texBottom);
 			height = (float)(heightColour * scale);
 			glVertex3f((float)xVal * xzscale, height, (float)zVal * xzscale);
 
 			if((zVal + 1) < terrainSize){
 				heightColour = heightfieldData.at(((zVal + 1) * terrainSize) + xVal);
 				glColor3ub(heightColour, heightColour, heightColour);
+				glTexCoord2f(texLeft, texTop);
 				height = (float)(heightColour * scale);
 				glVertex3f((float)xVal * xzscale, height, (float)(zVal + 1) * xzscale);
 			}

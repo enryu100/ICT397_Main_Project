@@ -126,6 +126,8 @@ namespace graphics{
 		std::vector<unsigned char> heightfieldData;
 		/// Scale data for heightfield
 		float scale, xzscale;
+		/// Boolean for whether a texture is being applied
+		bool textureMap;
 		/// The models of the game's objects.
 		std::vector<Model> models;
 
