@@ -5,6 +5,7 @@ using namespace terrain;
 
 MainGame::MainGame(void){
 	currentState = GameState::PLAY;
+	mouseSpeed = 0.004f;
 }
 
 MainGame::~MainGame(void){
@@ -45,6 +46,8 @@ void MainGame::initSystems(string initFile){
 	// Temp camera init. Do this from a file later.
 	player.setMoveSpeed(1.0);
 	player.setRotateSpeed(100.0);
+	temp1=0;
+	temp2 =0;
 }
 
 void MainGame::processInput(){
@@ -55,6 +58,16 @@ void MainGame::processInput(){
 		// Change camera view (mouse move)
 		//yawChange = newEvent.mouseX - gameEvnt.mouseX;
 		//pitchChange = newEvent.mouseY - gameEvnt.mouseY;
+		float mousechange1 = 1024/2 - gameEvnt.mouseX;
+		float mousechange2 = 720/2 - gameEvnt.mouseY;
+
+		old1 = temp1;
+		old2 = temp2;
+		 temp1 = mouseSpeed * float( mousechange1);
+		 temp2 = mouseSpeed * float(  mousechange2);
+		 float change1 = (temp1-old1) ;
+		 float change2 = (temp2 - old2) ;
+		/*
 		if(newEvent.mouseX > gameEvnt.mouseX)
 			yawChange = 1.0f;
 		else{
@@ -71,6 +84,7 @@ void MainGame::processInput(){
 			else
 				pitchChange = 0.0f;
 		}
+		*/
 		// Perform action (button/key press)
 		if(newEvent.keyDown){
 			for(int index = 0; index < newEvent.keysPressed.size(); index++){
@@ -95,7 +109,7 @@ void MainGame::processInput(){
 			std::cout << std::endl;
 		}
 
-		player.transformView(xChange, 0.0f, zChange, pitchChange, yawChange, 0.0f);
+		player.transformView(xChange, 0.0f, zChange, temp1, temp2, 0.0f);
 
 		// Test code
 		types::Matrix4x4 temp = player.getViewMatrix();

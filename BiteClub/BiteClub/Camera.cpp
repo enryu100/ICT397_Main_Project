@@ -14,19 +14,28 @@ Camera::Camera(){
 	                       Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
 	                       Vector4D(0.0f, 0.0f, 1.0f, 0.0f),
 	                       Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+	float horizontalAngle=0;
+	float verticalAngle=0;
 }
 
 void Camera::transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle){
 	moveLeftRight(deltaX);
 	moveUpDown(deltaY);
 	moveForwardBack(deltaZ);
-	rotateX(deltaXAngle);
-	rotateY(deltaYAngle);
+	//rotateX(deltaXAngle);
+	//rotateY(deltaYAngle);
+	horizontalAngle = deltaXAngle;
+	verticalAngle = deltaYAngle;
 	rotateZ(deltaZAngle);
 
 	viewMatrix.columns[0] = Vector4D(right.x, right.y, right.z, 0);
-	viewMatrix.columns[1] = Vector4D(up.x, up.y, up.z, 0);
-	viewMatrix.columns[2] = Vector4D(forward.x, forward.y, forward.z, 0);
+	//viewMatrix.columns[1] = Vector4D(up.x, up.y, up.z, 0);
+	//viewMatrix.columns[2] = Vector4D(forward.x, forward.y, forward.z, 0);
+	viewMatrix.columns[2] = Vector4D (
+    cos(verticalAngle) * sin(horizontalAngle),
+    sin(verticalAngle),
+    cos(verticalAngle) * cos(horizontalAngle), 0.0f
+);
 	viewMatrix.columns[3] = Vector4D(position.x, position.y, position.z, 1);
 }
 

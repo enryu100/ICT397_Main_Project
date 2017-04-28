@@ -65,6 +65,11 @@ public:
 	void run(std::string initFile);
 
 private:
+	float old1;
+	float old2;
+	float temp1;
+	float temp2;
+	float mouseSpeed;
 	/// The graphics engine.
 	graphics::GraphicsEngine graphicsEng;
 	/// The game terrain or map.

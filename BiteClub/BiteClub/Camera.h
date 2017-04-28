@@ -63,7 +63,8 @@ class Camera{
 		//Speed variables
 		double m_rotateSpeed;
 		double m_moveSpeed;
-
+		float horizontalAngle;
+		float verticalAngle;
 		//Vector variables
 		types::Vector3D position, forward, right, up;
 
