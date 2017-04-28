@@ -52,6 +52,40 @@ void MainGame::processInput(){
 	float xChange = 0.0f, zChange = 0.0f, pitchChange = 0.0f, yawChange = 0.0f;
 
 	if(newEvent.hasEvents){
+		xChange = 0.0f, zChange = 0.0f, pitchChange = 0.0f, yawChange = 0.0f;
+		//needs to be rescaled to actual screen size
+		
+		//float temp1 = mouseSpeed * deltaTime * float(1024/2 - newEvent.mouseX );
+		//float temp2 = mouseSpeed * deltaTime * float( 720/2 - newEvent.mouseY );
+		float mousechange1 = (1024/2 - (float)gameEvnt.mouseX);
+		float mousechange2 = (720/2 - (float)gameEvnt.mouseY);
+		
+		if (mousechange1 <0.05 && mousechange1>0.05){
+			mousechange1 =0;
+		}
+
+		if (mousechange2 <0.05 && mousechange2>0.05){
+			mousechange2 =0;
+		}
+		
+		old1 = temp1;
+		old2 = temp2;
+		 temp1 = mouseSpeed * float( mousechange1);
+		 temp2 = mouseSpeed * float(  mousechange2);
+		 float change1 = (temp1-old1) ;
+		 float change2 = (temp2 - old2) ;
+		//player.horizontalAngle = player.horizontalAngle + temp1;
+		//player.verticalAngle = player.verticalAngle + temp2;
+		/*
+		if(newEvent.mouseX == gameEvnt.mouseX){
+			temp1 =0;
+		}
+		if(newEvent.mouseY == gameEvnt.mouseY){
+			temp2 =0;
+		}
+		*/
+		//horizontalAngle += mouseSpeed * deltaTime * float(1024/2 - newEvent.mouseX );
+		//verticalAngle   += mouseSpeed * deltaTime * float( 768/2 - newEvent.mouseY );
 		// Change camera view (mouse move)
 		//yawChange = newEvent.mouseX - gameEvnt.mouseX;
 		//pitchChange = newEvent.mouseY - gameEvnt.mouseY;
