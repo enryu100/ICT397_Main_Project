@@ -5,7 +5,7 @@ using namespace terrain;
 
 MainGame::MainGame(void){
 	currentState = GameState::PLAY;
-	mouseSpeed = 0.1f;
+	mouseSpeed = 0.004f;
 }
 
 MainGame::~MainGame(void){
@@ -63,8 +63,8 @@ void MainGame::processInput(){
 		
 		//float temp1 = mouseSpeed * deltaTime * float(1024/2 - newEvent.mouseX );
 		//float temp2 = mouseSpeed * deltaTime * float( 720/2 - newEvent.mouseY );
-		float mousechange1 = 1024/2 - gameEvnt.mouseX;
-		float mousechange2 = 720/2 - gameEvnt.mouseY;
+		float mousechange1 = (1024/2 - (float)gameEvnt.mouseX);
+		float mousechange2 = (720/2 - (float)gameEvnt.mouseY);
 		
 		if (mousechange1 <0.05 && mousechange1>0.05){
 			mousechange1 =0;
