@@ -14,19 +14,45 @@ Camera::Camera(){
 	                       Vector4D(0.0f, 1.0f, 0.0f, 0.0f),
 	                       Vector4D(0.0f, 0.0f, 1.0f, 0.0f),
 	                       Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
+	float horizontalAngle=0;
+		float verticalAngle=0;
 }
 
 void Camera::transformView(float deltaX, float deltaY, float deltaZ, float deltaXAngle, float deltaYAngle, float deltaZAngle){
 	moveLeftRight(deltaX);
 	moveUpDown(deltaY);
 	moveForwardBack(deltaZ);
-	rotateX(deltaXAngle);
-	rotateY(deltaYAngle);
+	//rotateX(deltaXAngle);
+	//rotateY(deltaYAngle);
 	rotateZ(deltaZAngle);
-
+	horizontalAngle = deltaXAngle;
+	verticalAngle = deltaYAngle;
+	//float diffh = horizontalAngle - hoztemp;
+	//float diffv = verticalAngle - vertemp;
+	//horizontalAngle = horizontalAngle - diffh;
+	//verticalAngle = verticalAngle - diffv;
+	//hoztemp = horizontalAngle;
+	//vertemp = verticalAngle;
+	
+	/*
+	if(horizontalAngle<0){
+		horizontalAngle = deltaXAngle;
+	}else (horizontalAngle< 0){
+		horizontalAngle = deltaXAngle;
+	}
+	if(verticalAngle>300){
+		verticalAngle = 300;
+	}else if(verticalAngle< -300){
+		verticalAngle = -300;
+	}
+	*/
 	viewMatrix.columns[0] = Vector4D(right.x, right.y, right.z, 0);
-	viewMatrix.columns[1] = Vector4D(up.x, up.y, up.z, 0);
-	viewMatrix.columns[2] = Vector4D(forward.x, forward.y, forward.z, 0);
+	//viewMatrix.columns[1] = Vector4D(up.x, up.y, up.z, 0);
+	viewMatrix.columns[2] = Vector4D (
+    cos(verticalAngle) * sin(horizontalAngle),
+    sin(verticalAngle),
+    cos(verticalAngle) * cos(horizontalAngle), 0.0f
+);
 	viewMatrix.columns[3] = Vector4D(position.x, position.y, position.z, 1);
 }
 
@@ -53,6 +79,8 @@ void Camera::rotateX(float angle){
 
 void Camera::rotateY(float angle){
 	// THERE MAY BE SOMETHING WRONG IN HERE!
+
+
 	Vector3D newForward = forward, newRight = right;
 
 	angle *= m_rotateSpeed;
@@ -61,6 +89,8 @@ void Camera::rotateY(float angle){
 	forward.x = (cos(angle + (PI / 2)) * newForward.x) + (cos(angle) * newRight.x);
 	forward.y = (cos(angle + (PI / 2)) * newForward.y) + (cos(angle) * newRight.y);
 	forward.z = (cos(angle + (PI / 2)) * newForward.z) + (cos(angle) * newRight.z);
+
+
 
 	right.x = (cos(angle) * newForward.x) + (cos(angle - (PI / 2)) * newRight.x);
 	right.y = (cos(angle) * newForward.y) + (cos(angle - (PI / 2)) * newRight.y);
