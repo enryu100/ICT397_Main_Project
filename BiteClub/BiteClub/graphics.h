@@ -6,7 +6,13 @@
 *
 * Contains all of the functionality required to render objects. Encapsulating SDL to
 * achieve this.
+*
+* Model loaders - probably an OBJECT loader, to be precise - will be needed.
 */
+
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
 #pragma once
 
 #include <iostream>
@@ -64,10 +70,10 @@ namespace graphics{
 		
 		/**
 		* @brief Initialises the engine and view.
-		* @param modelFiles - a list of file names for the models
 		*
-		* init initialises the engine's components - the window, OpenGL context, and models.
-		* Model data is loaded in with the file names provided as arguments.
+		* init initialises the engine's components - the window and OpenGL context. It should
+		* probably take in all of the data it needs at this point as well, but this is
+		* currently done separately.
 		*/
 		void init(std::vector<std::string> modelFiles);
 		/**
@@ -126,10 +132,8 @@ namespace graphics{
 		std::vector<unsigned char> heightfieldData;
 		/// Scale data for heightfield
 		float scale, xzscale;
-		/// Boolean for whether a texture is being applied
-		bool textureMap;
 		/// The models of the game's objects.
-		std::vector<Model> models;
+		std::vector<Model> models;  //To store model data. Models are going to have a position and array (or whatever) of points to draw.
 
 		/**
 		* @brief Draws the terrain on to the screen.
@@ -142,16 +146,9 @@ namespace graphics{
 		*
 		* drawModels uses the model data to draw all of the game's objects to the screen.
 		*/
-		void drawModels();
+		void drawModels(){};
 	};
 
-	/**
-	* @struct ModelData
-	* @brief Holds vertex, UV, and normal data for a model.
-	*
-	* This struct is a simple container for a model's data - vertices, UV co-ordinates, and
-	* normals.
-	*/
 	struct ModelData{
 		std::vector<types::Vector3D> vertices;
 		std::vector<types::Vector2D> uvs;
@@ -169,9 +166,7 @@ namespace graphics{
 	* @version 01
 	* @date 21/4/2017 Alfred Malone, created class
 	*
-	* @author Alfred Malone
-	* @version 02
-	* @date 27/4/2017 Alfred Malone, added functionality to load from file
+	* @todo Actually finish the class, as it's unused presently
 	*/
 	class Model{
 	public:
@@ -186,7 +181,6 @@ namespace graphics{
 
 		/**
 		* @brief Loads all data for the model.
-		* @param modelFile - The file name for the model data
 		*
 		* loadData loads the model's data from a file using the object file loader. This
 		* gives it limitations, but it should suffice currently.
@@ -216,9 +210,13 @@ namespace graphics{
 		void setModelPos(const types::Vector3D& newPos){modelPos = newPos;};
 
 	private:
+		/// The ID of the model. May not be used presently...
+		int modelID;
 		/// The position of the model.
 		types::Vector3D modelPos;
 		/// The model data.
 		ModelData data;
 	};
 }
+
+#endif

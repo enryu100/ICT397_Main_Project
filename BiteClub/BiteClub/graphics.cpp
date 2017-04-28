@@ -8,7 +8,6 @@ GraphicsEngine::GraphicsEngine(){
 	window = nullptr;
 	screenWidth = 1024;
 	screenHeight = 720;
-	textureMap = false;
 }
 
 GraphicsEngine::~GraphicsEngine(){
@@ -56,8 +55,26 @@ void GraphicsEngine::display(double camX, double camY, double camZ, double lookX
 
 	gluLookAt(camX, camY, camZ, lookX, lookY, lookZ, upX, upY, upZ);
 
+	glBegin(GL_TRIANGLE_STRIP);
+		glColor3ub(254, 0, 0);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(2.0f, 1.0f, 1.0f);
+		glVertex3f(2.0f, 3.0f, 2.0f);
+	glEnd();
+
+	for(int index = 0; index < models.size(); index++){
+		ModelData modelInfo = models[index].getData();
+
+		glBegin(GL_TRIANGLE_STRIP);
+		for(int vertIndex = 0; vertIndex < modelInfo.vertices.size(); vertIndex++){
+			glVertex3f(modelInfo.vertices[vertIndex].x, modelInfo.vertices[vertIndex].y, modelInfo.vertices[vertIndex].z); 
+		}
+		glEnd();
+	}
+
 	drawTerrain();
-	drawModels();
 
 	SDL_GL_SwapWindow(window);
 }
@@ -103,52 +120,21 @@ void GraphicsEngine::drawTerrain(){
 	int terrainSize = (int)sqrt((double)heightfieldData.size());
 	unsigned char heightColour;
 	float height;
-	float texLeft, texBottom, texTop;
-
-	//Stuff for texturing (incomplete?)
-	if(textureMap){
-		glEnable(GL_TEXTURE_2D);
-		//glBindTexture(GL_TEXTURE_2D, texture.getID());
-	}
 
 	for(int zVal = 0; zVal < terrainSize; zVal++){
 		glBegin(GL_TRIANGLE_STRIP);
 		for(int xVal = 0; xVal < terrainSize; xVal++){
-
-			//calc texture coords
-			texLeft = (float)xVal/terrainSize;
-			texBottom = (float)zVal/terrainSize;
-			texTop = (float)(zVal + 1)/terrainSize;
-
 			heightColour = heightfieldData.at((zVal * terrainSize) + xVal);
 			glColor3ub(heightColour, heightColour, heightColour);
-			glTexCoord2f(texLeft, texBottom);
 			height = (float)(heightColour * scale);
 			glVertex3f((float)xVal * xzscale, height, (float)zVal * xzscale);
 
 			if((zVal + 1) < terrainSize){
 				heightColour = heightfieldData.at(((zVal + 1) * terrainSize) + xVal);
 				glColor3ub(heightColour, heightColour, heightColour);
-				glTexCoord2f(texLeft, texTop);
 				height = (float)(heightColour * scale);
 				glVertex3f((float)xVal * xzscale, height, (float)(zVal + 1) * xzscale);
 			}
-		}
-		glEnd();
-	}
-}
-
-void GraphicsEngine::drawModels(){
-	ModelData modelInfo;
-	types::Vector3D modelPos;
-
-	for(int index = 0; index < models.size(); index++){
-		modelInfo = models[index].getData();
-		modelPos = models[index].getModelPos();
-
-		glBegin(GL_TRIANGLE_STRIP);
-		for(int vertIndex = 0; vertIndex < modelInfo.vertices.size(); vertIndex++){
-			glVertex3f(modelInfo.vertices[vertIndex].x + modelPos.x, modelInfo.vertices[vertIndex].y + modelPos.y, modelInfo.vertices[vertIndex].z + modelPos.z); 
 		}
 		glEnd();
 	}
